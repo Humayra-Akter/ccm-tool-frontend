@@ -138,7 +138,8 @@ const Dashboard = () => {
           value="7"
           subtitle="All active control areas"
           icon={ShieldCheck}
-          tone="success"
+          status="success"
+          meta="Last updated 2 hours ago"
         />
 
         <KPICard
@@ -146,7 +147,7 @@ const Dashboard = () => {
           value="3"
           subtitle="Increase • Decrease • Update"
           icon={AlertTriangle}
-          tone="danger"
+          status="error"
         />
 
         <KPICard
@@ -154,7 +155,8 @@ const Dashboard = () => {
           value="AED 30.4M"
           subtitle="Potential savings exposure"
           icon={Landmark}
-          tone="warning"
+          status="warning"
+          meta="Current monitoring cycle"
         />
 
         <KPICard
@@ -162,7 +164,8 @@ const Dashboard = () => {
           value="25"
           subtitle="Critical 3 • High 7 • Medium 15"
           icon={ClipboardList}
-          tone="neutral"
+          status="info"
+          trend="Fresh"
         />
       </div>
 
@@ -174,7 +177,7 @@ const Dashboard = () => {
         <Chart title="Risk Score Trend" data={trendData} />
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <h3 className="mb-4 text-xl font-semibold text-secondary">
+          <h3 className="mb-4 text-xl font-semibold text-primary">
             KPI health list
           </h3>
 
@@ -222,7 +225,7 @@ const Dashboard = () => {
               key: "entity",
               label: "Entity",
               render: (value) => (
-                <span className="font-semibold text-secondary">{value}</span>
+                <span className="font-semibold text-primary">{value}</span>
               ),
             },
             { key: "exceptionDiscovery", label: "Exception Discovery" },

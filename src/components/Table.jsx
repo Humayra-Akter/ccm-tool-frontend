@@ -4,7 +4,7 @@ const Table = ({ title, columns = [], data = [], compact = false }) => {
   return (
     <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
       {title ? (
-        <h3 className="mb-4 text-xl font-semibold text-secondary">{title}</h3>
+        <h3 className="mb-4 text-xl font-semibold text-primary">{title}</h3>
       ) : null}
 
       <div className="overflow-x-auto">

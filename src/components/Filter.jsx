@@ -5,7 +5,7 @@ const FilterSelect = ({ label, value }) => {
   return (
     <button
       type="button"
-      className="flex h-12 w-full items-center justify-between rounded-xl border border-border bg-card px-4 text-sm text-text shadow-sm transition hover:border-primary"
+      className="flex h-9 w-full items-center justify-between rounded-xl border border-border bg-card px-4 text-sm text-text shadow-sm transition hover:border-primary"
     >
       <span>{value || label}</span>
       <ChevronDown size={18} className="text-muted" />
@@ -23,7 +23,7 @@ const Filter = () => {
 
         <button
           type="button"
-          className="flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-bg px-4 text-sm font-medium text-muted transition hover:text-text"
+          className="flex h-9 items-center justify-center gap-2 rounded-xl border border-border bg-bg px-4 text-sm font-medium text-muted transition hover:text-text"
         >
           <X size={16} />
           Clear
@@ -31,7 +31,7 @@ const Filter = () => {
 
         <button
           type="button"
-          className="flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-primary-soft px-4 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white"
+          className="flex h-9 items-center justify-center gap-2 rounded-xl border border-border bg-primary/80 px-4 text-sm font-semibold text-white transition hover:bg-primary"
         >
           <FileText size={16} />
           Generate Report
@@ -39,7 +39,7 @@ const Filter = () => {
 
         <button
           type="button"
-          className="flex h-12 items-center justify-center gap-2 rounded-xl bg-secondary px-4 text-sm font-semibold text-white transition hover:opacity-90"
+          className="flex h-9 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:opacity-90"
         >
           <Download size={16} />
           Export Data

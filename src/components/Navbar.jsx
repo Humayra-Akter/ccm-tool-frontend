@@ -28,7 +28,7 @@ const Navbar = () => {
     <div className="h-16 bg-white border-b border-border flex items-center justify-between px-6">
       {/* LEFT SECTION */}
       <div className="flex flex-col">
-        <h1 className="text-lg font-semibold text-text">{getTitle()}</h1>
+        <h1 className="text-lg font-bold text-primary">{getTitle()}</h1>
         <p className="text-xs text-muted">{getSubtitle()}</p>
       </div>
 

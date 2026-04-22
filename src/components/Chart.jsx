@@ -33,7 +33,7 @@ const Chart = ({ title, data = [] }) => {
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-xl font-semibold text-secondary">{title}</h3>
+        <h3 className="text-xl font-semibold text-primary">{title}</h3>
       </div>
 
       <div className="overflow-x-auto">

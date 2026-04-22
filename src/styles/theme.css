@@ -1,17 +1,28 @@
+/* \src\styles\theme.css */
+
 @import "tailwindcss";
 
-/* your design system */
 @theme {
-  --color-primary: #c45508;
-  --color-primary-light: #f78a3e;
-  --color-primary-dark: #7d3605;
-
-  --color-bg: #ffffff;
-  --color-card: #fef7f3;
+  /* Base */
+  --color-bg: #f6f7fb;
+  --color-card: #ffffff;
 
   --color-text: #1f2937;
   --color-muted: #6b7280;
 
-  --color-success: #22c55e;
-  --color-error: #ef4444;
+  /* Brand */
+  --color-primary: #c45508;        /* rust orange */
+  --color-primary-light: #f78a3e;
+  --color-primary-soft: #fff4ec;
+
+  --color-secondary: #4338ca;      /* indigo */
+  --color-secondary-light: #6366f1;
+
+  /* Status */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+
+  /* UI */
+  --color-border: #e5e7eb;
 }

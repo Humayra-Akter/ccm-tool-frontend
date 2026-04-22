@@ -1,95 +1,81 @@
 import React from "react";
-import { TrendingUp, TrendingDown } from "lucide-react";
+
+const toneMap = {
+  success: {
+    card: "bg-emerald-50 border-emerald-100",
+    title: "text-emerald-900",
+    value: "text-emerald-700",
+    sub: "text-emerald-600",
+    bar: "bg-success",
+    iconWrap: "bg-white/70 text-success",
+  },
+  danger: {
+    card: "bg-red-50 border-red-100",
+    title: "text-red-900",
+    value: "text-red-700",
+    sub: "text-red-600",
+    bar: "bg-error",
+    iconWrap: "bg-white/70 text-error",
+  },
+  warning: {
+    card: "bg-amber-50 border-amber-100",
+    title: "text-amber-900",
+    value: "text-amber-700",
+    sub: "text-amber-600",
+    bar: "bg-warning",
+    iconWrap: "bg-white/70 text-warning",
+  },
+  neutral: {
+    card: "bg-slate-50 border-slate-200",
+    title: "text-text",
+    value: "text-text",
+    sub: "text-muted",
+    bar: "bg-secondary",
+    iconWrap: "bg-white text-secondary",
+  },
+};
 
 const KPICard = ({
   title,
   value,
-  suffix = "%",
   subtitle,
-  progress = 0,
   icon: Icon,
-  trend,
-  variant = "neutral", // success | error | warning | neutral
+  tone = "neutral",
+  footer,
 }) => {
-  const styles = {
-    success: {
-      value: "text-success",
-      iconBg: "bg-green-100",
-      iconColor: "text-success",
-      bar: "bg-success",
-    },
-    error: {
-      value: "text-error",
-      iconBg: "bg-red-100",
-      iconColor: "text-error",
-      bar: "bg-error",
-    },
-    warning: {
-      value: "text-primary",
-      iconBg: "bg-orange-100",
-      iconColor: "text-primary",
-      bar: "bg-primary",
-    },
-    neutral: {
-      value: "text-primary",
-      iconBg: "bg-gray-100",
-      iconColor: "text-primary",
-      bar: "bg-primary",
-    },
-  };
-
-  const s = styles[variant];
+  const styles = toneMap[tone] || toneMap.neutral;
 
   return (
-    <div className="bg-card rounded-xl border border-gray-200 shadow-sm p-5 flex flex-col gap-4 hover:shadow-md transition">
-      {/* HEADER */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-text">{title}</h3>
-
-        {Icon && (
-          <div className={`p-2 rounded-lg ${s.iconBg}`}>
-            <Icon size={18} className={s.iconColor} />
-          </div>
-        )}
-      </div>
-
-      {/* VALUE */}
-      <div className="flex items-end justify-between">
-        <div className="flex items-baseline gap-1">
-          <span className={`text-3xl font-bold ${s.value}`}>{value}</span>
-          <span className="text-sm text-muted">{suffix}</span>
+    <div
+      className={`rounded-2xl border p-4 shadow-sm transition hover:shadow-md ${styles.card}`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className={`text-sm font-semibold ${styles.title}`}>{title}</p>
+          <h3
+            className={`mt-2 text-3xl font-bold leading-none ${styles.value}`}
+          >
+            {value}
+          </h3>
+          {subtitle ? (
+            <p className={`mt-2 text-sm ${styles.sub}`}>{subtitle}</p>
+          ) : null}
         </div>
 
-        {/* TREND */}
-        {trend && (
-          <div className="flex items-center gap-1 text-sm font-medium">
-            {trend.direction === "up" ? (
-              <TrendingUp size={16} className="text-success" />
-            ) : (
-              <TrendingDown size={16} className="text-error" />
-            )}
-
-            <span
-              className={
-                trend.direction === "up" ? "text-success" : "text-error"
-              }
-            >
-              {trend.value}
-            </span>
+        {Icon ? (
+          <div
+            className={`flex h-11 w-11 items-center justify-center rounded-xl ${styles.iconWrap}`}
+          >
+            <Icon size={22} />
           </div>
-        )}
+        ) : null}
       </div>
 
-      {/* SUBTITLE */}
-      <p className="text-sm text-muted">{subtitle}</p>
-
-      {/* PROGRESS */}
-      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-        <div
-          className={`h-full ${s.bar} transition-all duration-500`}
-          style={{ width: `${progress}%` }}
-        />
+      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/70">
+        <div className={`h-full w-3/4 rounded-full ${styles.bar}`} />
       </div>
+
+      {footer ? <div className="mt-3 text-xs text-muted">{footer}</div> : null}
     </div>
   );
 };

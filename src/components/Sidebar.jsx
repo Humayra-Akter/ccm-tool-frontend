@@ -121,7 +121,7 @@ const Sidebar = () => {
             )}
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto px-3 py-5 space-y-6">
+        <div className="flex-1 overflow-y-auto px-3 py-5 space-y-3">
           {navItems.map((group) => (
             <div key={group.section}>
               {!collapsed && (

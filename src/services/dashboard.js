@@ -25,6 +25,7 @@ export async function fetchDashboardEntityScores(params = {}) {
   return res.data.data;
 }
 
+//------------Exception-----------------
 export async function fetchExceptions(params = {}) {
   const res = await api.get("/dashboard/exceptions", { params });
   return res.data.data;
@@ -33,4 +34,23 @@ export async function fetchExceptions(params = {}) {
 export async function fetchExceptionAnalytics(params = {}) {
   const res = await api.get("/dashboard/exceptions-analytics", { params });
   return res.data.data;
+}
+
+// -------------KPI----------------
+
+export async function fetchKpiControls() {
+  const res = await api.get("/kpi/controls");
+  return res.data.data;
+}
+
+export async function fetchKpiReport(controlCode) {
+  const res = await api.get(`/kpi/controls/${controlCode}/report`);
+  return res.data.data;
+}
+
+export async function fetchKpiDemoPdf(controlCode) {
+  const res = await api.get(`/kpi/controls/${controlCode}/pdf`, {
+    responseType: "arraybuffer",
+  });
+  return res.data;
 }

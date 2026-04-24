@@ -15,7 +15,7 @@ const kpiMap = {
     accent: "bg-primary",
     overline: "text-primary",
     title: "text-text",
-    value: "text-primary-soft",
+    value: "text-primary",
     subtitle: "text-muted text-xs",
     badge: "bg-primary-soft text-primary",
     meta: "bg-white/80 text-muted border border-border/70",
@@ -103,6 +103,9 @@ const KPICard = ({
   meta,
   trend,
   className = "",
+  valuePrefix,
+  valueSuffix,
+  compactValue = false,
 }) => {
   const tone = kpiMap[status] || kpiMap.default;
   const Icon = IconProp || tone.fallbackIcon;
@@ -137,11 +140,25 @@ const KPICard = ({
             ) : null}
           </div>
 
-          <h3
-            className={`mt-3 text-2xl font-bold leading-none tracking-[-0.02em] ${tone.value}`}
+          <div
+            className={`mt-3 flex flex-wrap items-end gap-2 ${
+              compactValue ? "text-xl" : "text-2xl"
+            } font-bold leading-none tracking-[-0.02em] ${tone.value}`}
           >
-            {value}
-          </h3>
+            {valuePrefix ? (
+              <span className="text-[0.7em] font-semibold uppercase tracking-normal">
+                {valuePrefix}
+              </span>
+            ) : null}
+
+            <span>{value}</span>
+
+            {valueSuffix ? (
+              <span className="text-[0.65em] font-semibold text-muted">
+                {valueSuffix}
+              </span>
+            ) : null}
+          </div>
 
           {subtitle ? (
             <p className={`mt-2 text-sm leading-6 ${tone.subtitle}`}>

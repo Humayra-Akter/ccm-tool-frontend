@@ -11,7 +11,7 @@ const BarTrendChart = ({
   const maxValue = Math.max(...data.map((d) => Number(d[valueKey] || 0)), 1);
 
   return (
-    <div className="rounded-3xl border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
+    <div className="rounded-lg border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
       <div className="mb-5 flex items-start justify-between">
         <div>
           <h3 className="text-xl font-semibold tracking-[-0.02em] text-primary">

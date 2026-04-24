@@ -221,14 +221,14 @@ const ExceptionTracking = () => {
 
   if (loading) {
     return (
-      <div className="rounded-3xl border border-border bg-card p-8 text-sm text-muted shadow-sm">
+      <div className="rounded-lg border border-border bg-card p-8 text-sm text-muted shadow-sm">
         Loading exception tracking...
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div>
         <h1 className="text-4xl font-bold tracking-[-0.03em] text-primary">
           Exception Tracking
@@ -281,7 +281,20 @@ const ExceptionTracking = () => {
         />
       </div>
 
-      <div className="rounded-3xl border border-border bg-card p-4 shadow-sm">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.35fr_1fr]">
+        <Chart
+          title="Exception Trend"
+          subtitle="Movement of exceptions across the reporting timeline"
+          data={analytics?.trend || []}
+        />
+
+        <BarTrendChart
+          title="Exceptions by Control"
+          subtitle="Where most findings are concentrated"
+          data={analytics?.byControl || []}
+        />
+      </div>
+      <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
         <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h3 className="text-base font-semibold text-primary">
@@ -324,20 +337,6 @@ const ExceptionTracking = () => {
             },
           ]}
           onClear={clearFilters}
-        />
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.35fr_1fr]">
-        <Chart
-          title="Exception Trend"
-          subtitle="Movement of exceptions across the reporting timeline"
-          data={analytics?.trend || []}
-        />
-
-        <BarTrendChart
-          title="Exceptions by Control"
-          subtitle="Where most findings are concentrated"
-          data={analytics?.byControl || []}
         />
       </div>
 

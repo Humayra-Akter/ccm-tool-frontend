@@ -219,7 +219,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="rounded-3xl border border-border bg-card p-8 text-sm text-muted shadow-sm">
+      <div className="rounded-lg border border-border bg-card p-8 text-sm text-muted shadow-sm">
         Loading dashboard...
       </div>
     );
@@ -227,14 +227,14 @@ const Dashboard = () => {
 
   if (errorMsg) {
     return (
-      <div className="rounded-3xl border border-red-200 bg-red-50 p-8 text-sm text-red-600">
+      <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-sm text-red-600">
         {errorMsg}
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div>
         <h1 className="text-4xl font-bold tracking-[-0.03em] text-primary">
           CCM Dashboard
@@ -271,7 +271,7 @@ const Dashboard = () => {
           title="Financial Impact"
           value={Number(summary?.financialImpact || 0).toLocaleString()}
           valuePrefix="AED"
-          subtitle="Potential exposure across open exceptions"
+          subtitle="Potential exposure exceptions"
           icon={Landmark}
           status="warning"
           meta="Current monitoring cycle"

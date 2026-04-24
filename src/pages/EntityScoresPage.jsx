@@ -34,7 +34,7 @@ const EntityScoresPage = () => {
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="3">
       <BarTrendChart
         title="Business Response by Entity"
         subtitle="Quick comparison of current entity response levels"

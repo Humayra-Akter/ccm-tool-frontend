@@ -16,7 +16,7 @@ const Table = ({
 
   return (
     <div
-      className={`rounded-3xl border border-border bg-card p-4 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-5 ${className}`}
+      className={`rounded-lg border border-border bg-card p-4 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-5 ${className}`}
     >
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>

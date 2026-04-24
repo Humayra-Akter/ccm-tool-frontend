@@ -59,7 +59,7 @@ const Filter = ({
 }) => {
   return (
     <div
-      className={`rounded-3xl border border-border bg-card p-4 shadow-[0_8px_24px_rgba(79,49,94,0.06)] ${className}`}
+      className={`rounded-lg border border-border bg-card p-4 shadow-md ${className}`}
     >
       {(title || subtitle) && (
         <div className="mb-4">
@@ -73,7 +73,7 @@ const Filter = ({
       )}
 
       <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-        <div className="grid flex-1 grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid flex-1 gap-3 grid-cols-3">
           {filters.map((filter) => (
             <FilterSelect
               key={filter.key}

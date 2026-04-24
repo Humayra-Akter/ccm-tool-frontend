@@ -105,8 +105,7 @@ src/
 │
 ├── services/ ← API calls
 │ ├── api.js
-│ ├── kpi.js
-│ ├── upload.js
+│ ├── dashboard.js
 │ ├── powerbi.js
 │
 ├── layouts/

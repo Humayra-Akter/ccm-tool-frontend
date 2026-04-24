@@ -138,7 +138,7 @@ const KPICard = ({
           </div>
 
           <h3
-            className={`mt-3 text-3xl font-bold leading-none tracking-[-0.02em] ${tone.value}`}
+            className={`mt-3 text-2xl font-bold leading-none tracking-[-0.02em] ${tone.value}`}
           >
             {value}
           </h3>

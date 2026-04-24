@@ -1,25 +1,26 @@
 import React from "react";
 import { ChevronDown, X } from "lucide-react";
 
-const FilterSelect = ({
-  label,
-  value,
-  onClick,
-  className = "",
-  disabled = false,
-}) => {
+const FilterSelect = ({ label, value, options = [], onChange }) => {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className={`flex h-11 w-full items-center justify-between rounded-xl border border-border bg-white px-4 text-sm text-text shadow-sm transition hover:border-primary hover:bg-primary-soft/35 disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
-    >
-      <span className={`${value ? "text-text" : "text-muted"}`}>
-        {value || label}
-      </span>
-      <ChevronDown size={18} className="text-muted" />
-    </button>
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="h-11 w-full appearance-none rounded-2xl border border-border bg-white px-4 pr-10 text-sm text-text shadow-sm outline-none transition hover:border-primary focus:border-primary"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+
+      <ChevronDown
+        size={18}
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted"
+      />
+    </div>
   );
 };
 
@@ -28,7 +29,6 @@ const ActionButton = ({
   icon: Icon,
   onClick,
   variant = "secondary",
-  disabled = false,
 }) => {
   const styles = {
     ghost:
@@ -41,8 +41,7 @@ const ActionButton = ({
     <button
       type="button"
       onClick={onClick}
-      disabled={disabled}
-      className={`flex h-11 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold shadow-sm transition disabled:cursor-not-allowed disabled:opacity-60 ${styles[variant]}`}
+      className={`flex h-11 items-center justify-center gap-2 rounded-2xl px-4 text-sm font-semibold shadow-sm transition ${styles[variant]}`}
     >
       {Icon ? <Icon size={16} /> : null}
       {label}
@@ -56,19 +55,20 @@ const Filter = ({
   filters = [],
   actions = [],
   onClear,
-  showClear = true,
   className = "",
 }) => {
   return (
     <div
-      className={`rounded-xl border border-border bg-card p-4 shadow-[0_8px_24px_rgba(79,49,94,0.06)] ${className}`}
+      className={`rounded-3xl border border-border bg-card p-4 shadow-[0_8px_24px_rgba(79,49,94,0.06)] ${className}`}
     >
       {(title || subtitle) && (
-        <div className="mb-4 flex flex-col gap-1">
+        <div className="mb-4">
           {title ? (
             <h3 className="text-base font-semibold text-primary">{title}</h3>
           ) : null}
-          {subtitle ? <p className="text-sm text-muted">{subtitle}</p> : null}
+          {subtitle ? (
+            <p className="mt-1 text-sm text-muted">{subtitle}</p>
+          ) : null}
         </div>
       )}
 
@@ -79,23 +79,21 @@ const Filter = ({
               key={filter.key}
               label={filter.label}
               value={filter.value}
-              onClick={filter.onClick}
-              disabled={filter.disabled}
+              options={filter.options}
+              onChange={filter.onChange}
             />
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 xl:justify-end">
-          {showClear && (
-            <button
-              type="button"
-              onClick={onClear}
-              className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-bg px-4 text-sm font-medium text-muted shadow-sm transition hover:bg-primary-soft/35 hover:text-text"
-            >
-              <X size={16} />
-              Clear
-            </button>
-          )}
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={onClear}
+            className="flex h-11 items-center justify-center gap-2 rounded-2xl border border-border bg-bg px-4 text-sm font-medium text-muted shadow-sm transition hover:bg-primary-soft/35 hover:text-text"
+          >
+            <X size={16} />
+            Clear
+          </button>
 
           {actions.map((action) => (
             <ActionButton
@@ -104,7 +102,6 @@ const Filter = ({
               icon={action.icon}
               onClick={action.onClick}
               variant={action.variant}
-              disabled={action.disabled}
             />
           ))}
         </div>

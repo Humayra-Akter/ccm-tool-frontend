@@ -7,7 +7,7 @@ const FilterSelect = ({ label, value, options = [], onChange }) => {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-11 w-full appearance-none rounded-2xl border border-border bg-white px-4 pr-10 text-sm text-text shadow-sm outline-none transition hover:border-primary focus:border-primary"
+        className="h-11 w-full appearance-none rounded-lg border border-border bg-white px-4 pr-10 text-sm text-text shadow-sm outline-none transition hover:border-primary focus:border-primary"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -41,7 +41,7 @@ const ActionButton = ({
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-11 items-center justify-center gap-2 rounded-2xl px-4 text-sm font-semibold shadow-sm transition ${styles[variant]}`}
+      className={`flex h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold shadow-sm transition ${styles[variant]}`}
     >
       {Icon ? <Icon size={16} /> : null}
       {label}
@@ -89,7 +89,7 @@ const Filter = ({
           <button
             type="button"
             onClick={onClear}
-            className="flex h-11 items-center justify-center gap-2 rounded-2xl border border-border bg-bg px-4 text-sm font-medium text-muted shadow-sm transition hover:bg-primary-soft/35 hover:text-text"
+            className="flex h-11 items-center justify-center gap-2 rounded-lg border border-border bg-bg px-4 text-sm font-medium text-muted shadow-sm transition hover:bg-primary-soft/35 hover:text-text"
           >
             <X size={16} />
             Clear

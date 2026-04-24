@@ -18,7 +18,7 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const base =
-    "flex items-center rounded-xl text-sm font-medium transition-all duration-200";
+    "flex items-center rounded-lg text-sm font-medium transition-all duration-200";
   const expandedBase = "gap-3 px-4 py-2.5";
   const collapsedBase = "justify-center px-3 py-3";
 
@@ -160,7 +160,7 @@ const Sidebar = () => {
           <button
             onClick={handleLogout}
             title={collapsed ? "Logout" : ""}
-            className={`flex w-full items-center rounded-xl text-sm font-medium text-error transition ${
+            className={`flex w-full items-center rounded-lg text-sm font-medium text-error transition ${
               collapsed
                 ? "justify-center px-3 py-3 hover:bg-red-50"
                 : "gap-3 px-4 py-2.5 hover:bg-red-50"

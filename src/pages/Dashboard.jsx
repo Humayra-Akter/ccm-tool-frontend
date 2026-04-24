@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ShieldCheck,
   AlertTriangle,
@@ -10,6 +11,7 @@ import {
 import KPICard from "../components/KPICard";
 import Filter from "../components/Filter";
 import Chart from "../components/Chart";
+import BarTrendChart from "../components/BarTrendChart";
 import Table from "../components/Table";
 import {
   fetchDashboardSummary,
@@ -73,7 +75,29 @@ const getResultBadge = (value) => {
   );
 };
 
+const entityOptions = [
+  { value: "ALL", label: "All entities" },
+  { value: "CORP_PROJ", label: "Corporate Projects" },
+  { value: "PROC_SHARED", label: "Procurement Shared Services" },
+  { value: "TRACK_DEV", label: "Track Development" },
+  { value: "DELIVERY_OPS", label: "Delivery Operations" },
+];
+
+const periodOptions = [
+  { value: "CURRENT", label: "Current cycle" },
+  { value: "YTD", label: "Year to date" },
+];
+
+const processOptions = [
+  { value: "ALL", label: "All processes" },
+  { value: "P2P", label: "Procure to Pay" },
+  { value: "PAYMENT", label: "Payment" },
+  { value: "INVOICING", label: "Invoicing" },
+];
+
 const Dashboard = () => {
+  const navigate = useNavigate();
+
   const [summary, setSummary] = useState(null);
   const [trendData, setTrendData] = useState([]);
   const [kpiHealth, setKpiHealth] = useState([]);
@@ -82,55 +106,88 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const [filterState, setFilterState] = useState({
+    period: "CURRENT",
+    entity: "ALL",
+    process: "ALL",
+  });
+
+  const loadDashboard = async (activeFilters = filterState) => {
+    try {
+      setLoading(true);
+      setErrorMsg("");
+
+      const params = {
+        period: activeFilters.period,
+        entity: activeFilters.entity,
+        process: activeFilters.process,
+      };
+
+      const [summaryRes, trendRes, healthRes, exceptionsRes, entityRes] =
+        await Promise.all([
+          fetchDashboardSummary(params),
+          fetchDashboardTrend(params),
+          fetchDashboardKpiHealth(params),
+          fetchDashboardRecentExceptions({ ...params, limit: 5 }),
+          fetchDashboardEntityScores({ ...params, limit: 5 }),
+        ]);
+
+      setSummary(summaryRes);
+      setTrendData(trendRes);
+      setKpiHealth(healthRes);
+      setRecentExceptions(exceptionsRes);
+      setEntityScores(entityRes);
+    } catch (error) {
+      setErrorMsg(
+        error?.response?.data?.message || "Failed to load dashboard data.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadDashboard = async () => {
-      try {
-        setLoading(true);
-        setErrorMsg("");
-
-        const [summaryRes, trendRes, healthRes, exceptionsRes, entityRes] =
-          await Promise.all([
-            fetchDashboardSummary(),
-            fetchDashboardTrend(),
-            fetchDashboardKpiHealth(),
-            fetchDashboardRecentExceptions(),
-            fetchDashboardEntityScores(),
-          ]);
-
-        setSummary(summaryRes);
-        setTrendData(trendRes);
-        setKpiHealth(healthRes);
-        setRecentExceptions(exceptionsRes);
-        setEntityScores(entityRes);
-      } catch (error) {
-        setErrorMsg(
-          error?.response?.data?.message || "Failed to load dashboard data.",
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadDashboard();
+    loadDashboard(filterState);
   }, []);
 
   const filters = useMemo(
     () => [
-      { key: "period", label: "Period", value: "Current cycle" },
-      { key: "entity", label: "Entity", value: "All entities" },
-      { key: "process", label: "Process", value: "All processes" },
+      {
+        key: "period",
+        label: "Period",
+        value: filterState.period,
+        options: periodOptions,
+        onChange: (value) =>
+          setFilterState((prev) => ({ ...prev, period: value })),
+      },
+      {
+        key: "entity",
+        label: "Entity",
+        value: filterState.entity,
+        options: entityOptions,
+        onChange: (value) =>
+          setFilterState((prev) => ({ ...prev, entity: value })),
+      },
+      {
+        key: "process",
+        label: "Process",
+        value: filterState.process,
+        options: processOptions,
+        onChange: (value) =>
+          setFilterState((prev) => ({ ...prev, process: value })),
+      },
     ],
-    [],
+    [filterState],
   );
 
   const actions = useMemo(
     () => [
       {
         key: "report",
-        label: "Generate Report",
+        label: "Apply Filters",
         icon: FileText,
         variant: "secondary",
-        onClick: () => console.log("Generate report"),
+        onClick: () => loadDashboard(filterState),
       },
       {
         key: "export",
@@ -140,8 +197,25 @@ const Dashboard = () => {
         onClick: () => console.log("Export data"),
       },
     ],
-    [],
+    [filterState],
   );
+
+  const exceptionVolumeByControl = useMemo(() => {
+    return kpiHealth.map((item) => ({
+      label: item.name,
+      value: item.count,
+    }));
+  }, [kpiHealth]);
+
+  const handleClear = () => {
+    const reset = {
+      period: "CURRENT",
+      entity: "ALL",
+      process: "ALL",
+    };
+    setFilterState(reset);
+    loadDashboard(reset);
+  };
 
   if (loading) {
     return (
@@ -170,7 +244,7 @@ const Dashboard = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 auto-rows-fr">
         <KPICard
           title="Total KPIs"
           value={summary?.totalKpis ?? 0}
@@ -178,6 +252,7 @@ const Dashboard = () => {
           icon={ShieldCheck}
           status="success"
           meta="Live from database"
+          className="h-full"
         />
 
         <KPICard
@@ -189,15 +264,19 @@ const Dashboard = () => {
           icon={AlertTriangle}
           status="error"
           meta="Controls needing attention"
+          className="h-full"
         />
 
         <KPICard
           title="Financial Impact"
-          value={`AED ${Number(summary?.financialImpact || 0).toLocaleString()}`}
-          subtitle="Potential exposure exceptions"
+          value={Number(summary?.financialImpact || 0).toLocaleString()}
+          valuePrefix="AED"
+          subtitle="Potential exposure across open exceptions"
           icon={Landmark}
           status="warning"
           meta="Current monitoring cycle"
+          compactValue
+          className="h-full"
         />
 
         <KPICard
@@ -208,7 +287,9 @@ const Dashboard = () => {
           } • Healthy ${summary?.healthyControls ?? 0}`}
           icon={ClipboardList}
           status="info"
-          trend="Live"
+          badge="Live"
+          meta="Current open exception inventory"
+          className="h-full"
         />
       </div>
 
@@ -217,50 +298,30 @@ const Dashboard = () => {
         subtitle="Refine control, entity, and reporting period views"
         filters={filters}
         actions={actions}
-        onClear={() => console.log("Clear filters")}
+        onClear={handleClear}
       />
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.55fr_1fr]">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.4fr_1fr]">
         <Chart
           title="Risk Score Trend"
           subtitle="Overall risk movement across the monitoring year"
           data={trendData}
         />
 
-        <div className="rounded-3xl border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold tracking-[-0.02em] text-primary">
-              KPI health list
-            </h3>
-            <p className="mt-1 text-sm text-muted">
-              Status across active control areas
-            </p>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-border">
-            {kpiHealth.map((item, index) => (
-              <div
-                key={item.id || item.name}
-                className={`grid grid-cols-[1fr_auto_auto] items-center gap-3 px-4 py-3.5 ${
-                  index !== kpiHealth.length - 1 ? "border-b border-border" : ""
-                }`}
-              >
-                <p className="text-sm font-medium text-text">{item.name}</p>
-                <span className="text-sm font-semibold text-text">
-                  {item.count}
-                </span>
-                {getStatusBadge(item.status)}
-              </div>
-            ))}
-          </div>
-        </div>
+        <BarTrendChart
+          title="Exception Volume by Control"
+          subtitle="Current open findings across active control areas"
+          data={exceptionVolumeByControl}
+        />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.25fr_1fr]">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.35fr_1fr]">
         <Table
           title="Recent Exceptions"
           subtitle="Latest open findings from the live backend"
           rowKey="id"
+          actionLabel="View all"
+          onAction={() => navigate("/app/exception")}
           columns={[
             {
               key: "risk",
@@ -281,6 +342,8 @@ const Dashboard = () => {
           title="Entity Wise Score"
           subtitle="Entity-level exception and response performance"
           rowKey="id"
+          actionLabel="View all"
+          onAction={() => navigate("/app/entity-scores")}
           columns={[
             {
               key: "entity",

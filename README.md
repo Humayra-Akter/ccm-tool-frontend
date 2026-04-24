@@ -87,6 +87,7 @@ src/
 │
 ├── components/ ← ALL reusable things here
 │ ├── Sidebar.jsx
+│ ├── BarTrendChart.jsx
 │ ├── Navbar.jsx
 │ ├── KPICard.jsx
 │ ├── Chart.jsx
@@ -102,6 +103,7 @@ src/
 │ ├── Dashboard.jsx
 │ ├── KPI.jsx
 │ ├── Upload.jsx
+│ ├── EntityScoresPage.jsx
 │
 ├── services/ ← API calls
 │ ├── api.js

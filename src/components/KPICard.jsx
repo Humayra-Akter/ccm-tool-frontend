@@ -109,7 +109,7 @@ const KPICard = ({
 
   return (
     <div
-      className={`group relative overflow-hidden rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${tone.card} ${className}`}
+      className={`group relative overflow-hidden rounded-lg border p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${tone.card} ${className}`}
     >
       <div
         className={`pointer-events-none absolute inset-x-0 bottom-0 h-1 ${tone.rail}`}

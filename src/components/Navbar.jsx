@@ -97,19 +97,15 @@ const Navbar = () => {
             </h1>
             <p className="text-xs text-muted lg:text-sm">{pageMeta.subtitle}</p>
           </div>
-
-          
         </div>
 
         <div className="ml-6 flex items-center gap-3 lg:gap-4">
           {pageMeta.showFilters && (
-            <button className="hidden items-center gap-2 rounded-xl border border-border bg-white px-3.5 py-2 text-sm font-medium text-text transition hover:bg-primary-soft hover:text-primary md:flex">
+            <button className="hidden items-center gap-2 rounded-lg border border-border bg-white px-3.5 py-2 text-sm font-medium text-text transition hover:bg-primary-soft hover:text-primary md:flex">
               <Filter size={16} />
               Filters
             </button>
           )}
-
-          
 
           <div className="relative" ref={notifRef}>
             <button
@@ -124,7 +120,7 @@ const Navbar = () => {
             </button>
 
             {notifOpen && (
-              <div className="absolute right-0 mt-1 w-80 overflow-hidden rounded-xl border border-border bg-card shadow-md">
+              <div className="absolute right-0 mt-1 w-80 overflow-hidden rounded-lg border border-border bg-card shadow-md">
                 <div className="flex items-center justify-between border-b border-border px-4 py-3">
                   <div>
                     <p className="text-sm font-semibold text-text">

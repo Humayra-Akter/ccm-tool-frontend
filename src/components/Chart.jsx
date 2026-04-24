@@ -17,14 +17,14 @@ const Chart = ({
 
   if (!data.length) {
     return (
-      <div className="rounded-xl border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
+      <div className="rounded-lg border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
         <div className="mb-4">
           <h3 className="text-xl font-semibold text-primary">{title}</h3>
           {subtitle ? (
             <p className="mt-1 text-sm text-muted">{subtitle}</p>
           ) : null}
         </div>
-        <div className="flex h-[320px] items-center justify-center rounded-xl bg-bg text-sm text-muted">
+        <div className="flex h-[320px] items-center justify-center rounded-lg bg-bg text-sm text-muted">
           No trend data available
         </div>
       </div>
@@ -79,7 +79,7 @@ const Chart = ({
     delta === 0 ? "No change" : `${delta > 0 ? "+" : ""}${delta}${valueSuffix}`;
 
   return (
-    <div className="rounded-xl border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
+    <div className="rounded-lg border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h3 className="text-xl font-semibold tracking-[-0.02em] text-primary">
@@ -90,7 +90,7 @@ const Chart = ({
           ) : null}
         </div>
 
-        <div className="inline-flex items-center gap-2 rounded-xl border border-border bg-bg px-3 py-2 text-sm">
+        <div className="inline-flex items-center gap-2 rounded-lg border border-border bg-bg px-3 py-2 text-sm">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft text-primary">
             <TrendingUp size={16} />
           </span>

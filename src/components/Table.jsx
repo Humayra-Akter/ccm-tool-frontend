@@ -8,16 +8,18 @@ const Table = ({
   compact = false,
   rowKey = "id",
   emptyMessage = "No records available",
+  actionLabel,
+  onAction,
   className = "",
 }) => {
   const hasData = Array.isArray(data) && data.length > 0;
 
   return (
     <div
-      className={`rounded-xl border border-border bg-card p-4 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-5 ${className}`}
+      className={`rounded-3xl border border-border bg-card p-4 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-5 ${className}`}
     >
-      {(title || subtitle) && (
-        <div className="mb-4">
+      <div className="mb-4 flex items-start justify-between gap-4">
+        <div>
           {title ? (
             <h3 className="text-xl font-semibold tracking-[-0.02em] text-primary">
               {title}
@@ -27,7 +29,17 @@ const Table = ({
             <p className="mt-1 text-sm text-muted">{subtitle}</p>
           ) : null}
         </div>
-      )}
+
+        {actionLabel && onAction ? (
+          <button
+            type="button"
+            onClick={onAction}
+            className="shrink-0 rounded-lg border border-border bg-white px-3 py-2 text-sm font-medium text-primary transition hover:bg-primary-soft/30"
+          >
+            {actionLabel}
+          </button>
+        ) : null}
+      </div>
 
       <div className="overflow-x-auto">
         <table className="min-w-full border-separate border-spacing-0">

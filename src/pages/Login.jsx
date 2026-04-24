@@ -132,23 +132,23 @@ const Login = () => {
           </div>
 
           <div className="grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded-xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur-sm">
+            <div className="rounded-lg border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur-sm">
               <div className="text-3xl font-semibold text-white">7</div>
               <div className="mt-1 text-sm text-white/72">Control areas</div>
             </div>
 
-            <div className="rounded-xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur-sm">
+            <div className="rounded-lg border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur-sm">
               <div className="text-3xl font-semibold text-white">1</div>
               <div className="mt-1 text-sm text-white/72">Unified portal</div>
             </div>
 
-            <div className="rounded-xl border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur-sm">
+            <div className="rounded-lg border border-white/15 bg-white/10 p-5 shadow-sm backdrop-blur-sm">
               <div className="text-3xl font-semibold text-white">Live</div>
               <div className="mt-1 text-sm text-white/72">Power BI outputs</div>
             </div>
           </div>
 
-          <div className="max-w-5xl rounded-xl border border-white/18 bg-white/10 px-6 py-5 shadow-sm backdrop-blur-md">
+          <div className="max-w-5xl rounded-lg border border-white/18 bg-white/10 px-6 py-5 shadow-sm backdrop-blur-md">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="font-semibold text-white">
@@ -176,13 +176,13 @@ const Login = () => {
         </section>
 
         <aside className="flex items-center justify-center lg:justify-end">
-          <div className="w-full max-w-md rounded-xl border border-white/18 bg-white/14 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:p-8">
-            <div className="mb-6 rounded-xl bg-white/10 p-1.5">
+          <div className="w-full max-w-md rounded-lg border border-white/18 bg-white/14 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:p-8">
+            <div className="mb-6 rounded-lg bg-white/10 p-1.5">
               <div className="grid grid-cols-2 gap-1.5">
                 <button
                   type="button"
                   onClick={() => switchMode("login")}
-                  className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                  className={`rounded-lg px-4 py-3 text-sm font-semibold transition ${
                     isLogin
                       ? "bg-primary text-white shadow-sm"
                       : "bg-transparent text-white/70 hover:text-white"
@@ -194,7 +194,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => switchMode("register")}
-                  className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                  className={`rounded-lg px-4 py-3 text-sm font-semibold transition ${
                     !isLogin
                       ? "bg-primary text-white shadow-sm"
                       : "bg-transparent text-white/70 hover:text-white"
@@ -227,7 +227,7 @@ const Login = () => {
                     value={form.fullName}
                     onChange={(e) => onChange("fullName", e.target.value)}
                     placeholder="Enter full name"
-                    className="w-full rounded-xl border border-white/20 bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
+                    className="w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
                   />
                 </div>
               )}
@@ -241,7 +241,7 @@ const Login = () => {
                   value={form.email}
                   onChange={(e) => onChange("email", e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full rounded-xl border border-white/20 bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
+                  className="w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
                 />
               </div>
 
@@ -256,7 +256,7 @@ const Login = () => {
                     value={form.password}
                     onChange={(e) => onChange("password", e.target.value)}
                     placeholder="Enter password"
-                    className="w-full rounded-xl border border-white/20 bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
+                    className="w-full rounded-lg border border-white/20 bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
                   />
 
                   <button
@@ -281,7 +281,7 @@ const Login = () => {
                       onChange("confirmPassword", e.target.value)
                     }
                     placeholder="Re-enter password"
-                    className="w-full rounded-xl border border-white/20 bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
+                    className="w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20"
                   />
                 </div>
               )}
@@ -309,13 +309,13 @@ const Login = () => {
               {!isLogin &&
                 form.confirmPassword &&
                 form.password !== form.confirmPassword && (
-                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                  <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
                     Password and confirm password do not match.
                   </div>
                 )}
 
               {errorMsg && (
-                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
                   {errorMsg}
                 </div>
               )}
@@ -323,7 +323,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={!canSubmit || loading}
-                className="w-full rounded-xl bg-secondary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full rounded-lg bg-secondary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading
                   ? isLogin

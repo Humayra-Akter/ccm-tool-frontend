@@ -24,3 +24,13 @@ export async function fetchDashboardEntityScores(params = {}) {
   const res = await api.get("/dashboard/entity-scores", { params });
   return res.data.data;
 }
+
+export async function fetchExceptions(params = {}) {
+  const res = await api.get("/dashboard/exceptions", { params });
+  return res.data.data;
+}
+
+export async function fetchExceptionAnalytics(params = {}) {
+  const res = await api.get("/dashboard/exceptions-analytics", { params });
+  return res.data.data;
+}

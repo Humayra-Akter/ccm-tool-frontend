@@ -7,17 +7,17 @@ import Upload from "./pages/Upload";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Exception from "./pages/Exception";
-import { Settings } from "lucide-react";
+import SettingsPage from "./pages/Settings";
 
 const App = () => {
   return (
     <Routes>
-      {/* entry */}
-      <Route path="/" element={<Login />} />
+      {/* public */}
+      <Route path="/login" element={<Login />} />
 
-      {/* protected app */}
+      {/* protected */}
       <Route
-        path="/"
+        path="/app"
         element={
           <ProtectedRoute>
             <AppLayout />
@@ -28,11 +28,14 @@ const App = () => {
         <Route path="kpi" element={<KPI />} />
         <Route path="exception" element={<Exception />} />
         <Route path="upload" element={<Upload />} />
-        <Route path="settings" element={<Settings />} />
+        <Route path="settings" element={<SettingsPage />} />
       </Route>
 
+      {/* default */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+
       {/* fallback */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 };

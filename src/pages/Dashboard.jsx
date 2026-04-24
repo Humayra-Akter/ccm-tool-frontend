@@ -1,83 +1,113 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   ShieldCheck,
   AlertTriangle,
   Landmark,
   ClipboardList,
+  FileText,
+  Download,
 } from "lucide-react";
 import KPICard from "../components/KPICard";
 import Filter from "../components/Filter";
 import Chart from "../components/Chart";
 import Table from "../components/Table";
 
-const trendData = [
-  { label: "Jan", value: 38 },
-  { label: "Feb", value: 42 },
-  { label: "Mar", value: 40 },
-  { label: "Apr", value: 58 },
-  { label: "May", value: 62 },
-  { label: "Jun", value: 78 },
-  { label: "Jul", value: 104 },
-  { label: "Aug", value: 86 },
-  { label: "Sep", value: 72 },
-  { label: "Oct", value: 58 },
-  { label: "Nov", value: 45 },
-  { label: "Dec", value: 50 },
+const seededControls = [
+  { name: "Early Payments", findings: 3, status: "Critical" },
+  { name: "Duplicate Payments", findings: 4, status: "Warning" },
+  { name: "Dormant PO", findings: 1, status: "Healthy" },
+  { name: "Two Way Match", findings: 4, status: "Healthy" },
+  { name: "New Undelivered POs", findings: 2, status: "Warning" },
+  { name: "Aged Open Advances", findings: 3, status: "Warning" },
+  { name: "Invoice Split Bypass", findings: 4, status: "Warning" },
 ];
 
-const kpiHealth = [
-  { name: "Early Payments", count: 3, status: "Critical" },
-  { name: "Duplicate Payments", count: 4, status: "Warning" },
-  { name: "Dormant PO", count: 1, status: "Healthy" },
-  { name: "Two Way Match", count: 4, status: "Healthy" },
-  { name: "New Undelivered POs", count: 2, status: "Warning" },
-  { name: "Aged Open Advances", count: 3, status: "Warning" },
-  { name: "Invoice Split Bypass", count: 4, status: "Warning" },
+const trendData = [
+  { label: "Jan", value: 42 },
+  { label: "Feb", value: 45 },
+  { label: "Mar", value: 44 },
+  { label: "Apr", value: 58 },
+  { label: "May", value: 63 },
+  { label: "Jun", value: 79 },
+  { label: "Jul", value: 96 },
+  { label: "Aug", value: 84 },
+  { label: "Sep", value: 71 },
+  { label: "Oct", value: 59 },
+  { label: "Nov", value: 48 },
+  { label: "Dec", value: 52 },
 ];
 
 const recentExceptions = [
   {
+    id: "EX-1001",
     risk: "High",
-    id: "AS0963",
-    entity: "Duplicate Invoice",
-    amount: "127,000",
+    control: "Duplicate Payments",
+    entity: "Abu Dhabi Infra",
+    amount: "AED 4.8M",
     dueDate: "27 May 2026",
   },
   {
+    id: "EX-1002",
     risk: "Medium",
-    id: "AS0943",
-    entity: "Paid after Due Date",
-    amount: "135,000",
-    dueDate: "17 May 2026",
+    control: "Aged Open Advances",
+    entity: "Corporate Projects",
+    amount: "AED 3.2M",
+    dueDate: "29 May 2026",
   },
   {
-    risk: "Low",
-    id: "AS0923",
-    entity: "Inactive Account",
-    amount: "132,000",
-    dueDate: "21 May 2026",
+    id: "EX-1003",
+    risk: "High",
+    control: "Invoice Split Bypass",
+    entity: "Procurement Shared Services",
+    amount: "AED 5.9M",
+    dueDate: "31 May 2026",
   },
   {
+    id: "EX-1004",
     risk: "Low",
-    id: "AS0939",
-    entity: "New Account Issued",
-    amount: "142,000",
-    dueDate: "23 May 2026",
+    control: "Dormant PO",
+    entity: "Track Development",
+    amount: "AED 0.7M",
+    dueDate: "02 Jun 2026",
+  },
+  {
+    id: "EX-1005",
+    risk: "Medium",
+    control: "New Undelivered POs",
+    entity: "Delivery Operations",
+    amount: "AED 2.4M",
+    dueDate: "04 Jun 2026",
   },
 ];
 
 const entityScores = [
   {
-    entity: "Corporate",
-    exceptionDiscovery: "0.01%",
-    businessResponse: "0%",
-    finalResults: "0%",
+    id: 1,
+    entity: "Corporate Projects",
+    exceptionDiscovery: "0.84%",
+    businessResponse: "78%",
+    finalResults: "Moderate",
   },
   {
-    entity: "Development",
-    exceptionDiscovery: "0.01%",
-    businessResponse: "0%",
-    finalResults: "0%",
+    id: 2,
+    entity: "Procurement Shared Services",
+    exceptionDiscovery: "1.22%",
+    businessResponse: "64%",
+    finalResults: "High",
+  },
+  {
+    id: 3,
+    entity: "Track Development",
+    exceptionDiscovery: "0.31%",
+    businessResponse: "86%",
+    finalResults: "Low",
+  },
+  {
+    id: 4,
+    entity: "Delivery Operations",
+    exceptionDiscovery: "0.67%",
+    businessResponse: "73%",
+    finalResults: "Moderate",
   },
 ];
 
@@ -90,7 +120,7 @@ const getStatusBadge = (status) => {
 
   return (
     <span
-      className={`inline-flex min-w-[84px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold ${
+      className={`inline-flex min-w-[90px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold ${
         map[status] || "bg-slate-100 text-slate-700"
       }`}
     >
@@ -117,81 +147,154 @@ const getRiskBadge = (risk) => {
   );
 };
 
-const Dashboard = () => {
+const getResultBadge = (value) => {
+  const map = {
+    High: "bg-red-100 text-red-700",
+    Moderate: "bg-amber-100 text-amber-700",
+    Low: "bg-emerald-100 text-emerald-700",
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Page heading */}
-      <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-primary">CCM Dashboard</h1>
-          <p className="text-sm text-muted">
-            Monitor KPI performance, control exceptions, and entity-level
-            results.
-          </p>
-        </div>
+    <span
+      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+        map[value] || "bg-slate-100 text-slate-700"
+      }`}
+    >
+      {value}
+    </span>
+  );
+};
+
+const Dashboard = () => {
+  const totalFindings = useMemo(
+    () => seededControls.reduce((sum, item) => sum + item.findings, 0),
+    [],
+  );
+
+  const criticalCount = seededControls.filter(
+    (x) => x.status === "Critical",
+  ).length;
+  const warningCount = seededControls.filter(
+    (x) => x.status === "Warning",
+  ).length;
+  const healthyCount = seededControls.filter(
+    (x) => x.status === "Healthy",
+  ).length;
+  const exceptionKpis = seededControls.filter(
+    (x) => x.status !== "Healthy",
+  ).length;
+
+  const filters = [
+    { key: "period", label: "Period", value: "Current cycle" },
+    { key: "entity", label: "Entity", value: "All entities" },
+    { key: "process", label: "Process", value: "All processes" },
+  ];
+
+  const actions = [
+    {
+      key: "report",
+      label: "Generate Report",
+      icon: FileText,
+      variant: "secondary",
+      onClick: () => console.log("Generate report"),
+    },
+    {
+      key: "export",
+      label: "Export Data",
+      icon: Download,
+      variant: "primary",
+      onClick: () => console.log("Export data"),
+    },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <div>
+        <h1 className="text-2xl font-bold tracking-[-0.03em] text-primary">
+          CCM Dashboard
+        </h1>
+        <p className="mt-1 text-base text-muted">
+          Monitor KPI performance, control exceptions, and entity-level results.
+        </p>
       </div>
 
-      {/* KPI cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <KPICard
           title="Total KPIs"
-          value="7"
-          subtitle="All active control areas"
+          value={seededControls.length}
+          subtitle="All active seeded control areas"
           icon={ShieldCheck}
           status="success"
-          meta="Last updated 2 hours ago"
+          meta="7 active controls from seed"
         />
 
         <KPICard
           title="Exception KPIs"
-          value="3"
-          subtitle="Increase • Decrease • Update"
+          value={exceptionKpis}
+          subtitle={`${criticalCount} critical • ${warningCount} warning controls`}
           icon={AlertTriangle}
           status="error"
+          meta="Controls needing attention"
         />
 
         <KPICard
           title="Financial Impact"
-          value="AED 30.4M"
-          subtitle="Potential savings exposure"
+          value="AED 17.0M"
+          subtitle="Potential exposure exceptions"
           icon={Landmark}
           status="warning"
-          meta="Current monitoring cycle"
+          meta="Seed-aligned demo estimate"
         />
 
         <KPICard
           title="Open Findings"
-          value="25"
-          subtitle="Critical 3 • High 7 • Medium 15"
+          value={totalFindings}
+          subtitle={`Critical ${criticalCount} • Warning ${warningCount} • Healthy ${healthyCount}`}
           icon={ClipboardList}
           status="info"
-          trend="Fresh"
+          trend="Current cycle"
         />
       </div>
 
-      {/* filters */}
-      <Filter />
+      <Filter
+        title="Dashboard Filters"
+        subtitle="Refine control, entity, and reporting period views"
+        filters={filters}
+        actions={actions}
+        onClear={() => console.log("Clear filters")}
+      />
 
-      {/* middle section */}
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.55fr_1fr]">
-        <Chart title="Risk Score Trend" data={trendData} />
+        <Chart
+          title="Risk Score Trend"
+          subtitle="Overall risk movement across the current monitoring year"
+          data={trendData}
+          seriesLabel="Risk score"
+        />
 
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <h3 className="mb-4 text-xl font-semibold text-primary">
-            KPI health list
-          </h3>
+        <div className="rounded-xl border border-border bg-card p-5 shadow-[0_8px_24px_rgba(79,49,94,0.06)] lg:p-6">
+          <div className="mb-4">
+            <h3 className="text-xl font-semibold tracking-[-0.02em] text-primary">
+              KPI health list
+            </h3>
+            <p className="mt-1 text-sm text-muted">
+              Status across seeded active control areas
+            </p>
+          </div>
 
           <div className="overflow-hidden rounded-xl border border-border">
-            {kpiHealth.map((item, index) => (
+            {seededControls.map((item, index) => (
               <div
                 key={item.name}
-                className={`grid grid-cols-[1fr_auto_auto] items-center gap-3 px-4 py-3 ${
-                  index !== kpiHealth.length - 1 ? "border-b border-border" : ""
+                className={`grid grid-cols-[1fr_auto_auto] items-center gap-3 px-4 py-3.5 ${
+                  index !== seededControls.length - 1
+                    ? "border-b border-border"
+                    : ""
                 }`}
               >
                 <p className="text-sm font-medium text-text">{item.name}</p>
                 <span className="text-sm font-semibold text-text">
-                  {item.count}
+                  {item.findings}
                 </span>
                 {getStatusBadge(item.status)}
               </div>
@@ -200,10 +303,11 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* bottom section */}
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.2fr_1fr]">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.25fr_1fr]">
         <Table
           title="Recent Exceptions"
+          subtitle="Sample open findings aligned to the seeded control catalog"
+          rowKey="id"
           columns={[
             {
               key: "risk",
@@ -211,8 +315,9 @@ const Dashboard = () => {
               render: (value) => getRiskBadge(value),
             },
             { key: "id", label: "ID" },
+            { key: "control", label: "Control" },
             { key: "entity", label: "Entity" },
-            { key: "amount", label: "Amount (AED)" },
+            { key: "amount", label: "Amount" },
             { key: "dueDate", label: "Due Date" },
           ]}
           data={recentExceptions}
@@ -220,6 +325,8 @@ const Dashboard = () => {
 
         <Table
           title="Entity Wise Score"
+          subtitle="Illustrative response and exception performance by entity"
+          rowKey="id"
           columns={[
             {
               key: "entity",
@@ -230,7 +337,11 @@ const Dashboard = () => {
             },
             { key: "exceptionDiscovery", label: "Exception Discovery" },
             { key: "businessResponse", label: "Business Response" },
-            { key: "finalResults", label: "Final Results" },
+            {
+              key: "finalResults",
+              label: "Final Results",
+              render: (value) => getResultBadge(value),
+            },
           ]}
           data={entityScores}
           compact

@@ -42,7 +42,7 @@ const BarTrendChart = ({
                 </span>
               </div>
 
-              <div className="h-2.5 overflow-hidden rounded-full bg-primary-soft/20">
+              <div className="h-1 overflow-hidden rounded-full bg-primary-soft/20">
                 <div
                   className="h-full rounded-full bg-secondary transition-all"
                   style={{ width: `${percent}%` }}

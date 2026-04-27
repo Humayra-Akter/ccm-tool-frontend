@@ -3,7 +3,6 @@ import { BarChart3, ExternalLink } from "lucide-react";
 import { fetchKpiControls, fetchKpiReport } from "../services/dashboard";
 import PdfViewer from "../components/PdfViewer";
 
-
 const KPI = () => {
   const [controls, setControls] = useState([]);
   const [selectedControl, setSelectedControl] = useState(null);
@@ -65,7 +64,7 @@ const KPI = () => {
   const renderReportPanel = () => {
     if (loadingReport) {
       return (
-        <div className="flex h-[420px] items-center justify-center rounded-2xl border border-border bg-bg text-sm text-muted">
+        <div className="flex h-[420px] items-center justify-center rounded-lg border border-border bg-bg text-sm text-muted">
           Loading report...
         </div>
       );
@@ -74,7 +73,7 @@ const KPI = () => {
     if (reportData?.state === "DEMO_PDF") {
       return (
         <div className="space-y-4">
-          <div className="rounded-2xl border border-border bg-white px-4 py-3">
+          <div className="rounded-lg border border-border bg-white px-4 py-3">
             <p className="text-sm font-semibold text-primary">
               Dormant PO Demo Report
             </p>
@@ -85,7 +84,7 @@ const KPI = () => {
 
           <PdfViewer controlCode="DORMANT_PO" />
 
-          <div className="rounded-xl bg-primary-soft/20 px-4 py-3 text-sm text-primary">
+          <div className="rounded-lg bg-primary-soft/20 px-4 py-3 text-sm text-primary">
             Demo mode: Dormant PO is showing a PDF preview inside the portal.
           </div>
         </div>
@@ -94,7 +93,7 @@ const KPI = () => {
 
     if (reportData?.state === "READY") {
       return (
-        <div className="overflow-hidden rounded-2xl border border-border bg-bg">
+        <div className="overflow-hidden rounded-lg border border-border bg-bg">
           <div className="border-b border-border bg-white px-4 py-3">
             <p className="text-sm font-semibold text-primary">
               {reportData.report.reportName}
@@ -114,7 +113,7 @@ const KPI = () => {
     }
 
     return (
-      <div className="flex h-[320px] items-center justify-center rounded-2xl border border-dashed border-border bg-bg px-8 text-center">
+      <div className="flex h-[320px] items-center justify-center rounded-lg border border-dashed border-border bg-bg px-8 text-center">
         <div>
           <p className="text-lg font-semibold text-primary">
             No data available
@@ -127,7 +126,6 @@ const KPI = () => {
     );
   };
 
-  
   return (
     <div className="space-y-6">
       <div>

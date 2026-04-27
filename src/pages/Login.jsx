@@ -126,7 +126,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => switchMode("login")}
-                className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                className={`rounded-lg px-4 py-3 text-sm font-semibold transition ${
                   isLogin
                     ? "bg-primary text-white shadow-sm"
                     : "bg-transparent text-primary hover:bg-white/60"
@@ -138,7 +138,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => switchMode("register")}
-                className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                className={`rounded-lg px-4 py-3 text-sm font-semibold transition ${
                   !isLogin
                     ? "bg-primary text-white shadow-sm"
                     : "bg-transparent text-primary hover:bg-white/60"
@@ -172,7 +172,7 @@ const Login = () => {
                     value={form.email}
                     onChange={(e) => onChange("email", e.target.value)}
                     placeholder="name@company.com"
-                    className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
+                    className="w-full rounded-lg border border-border bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ const Login = () => {
                       value={form.password}
                       onChange={(e) => onChange("password", e.target.value)}
                       placeholder="Enter password"
-                      className="w-full rounded-xl border border-border bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
+                      className="w-full rounded-lg border border-border bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
                     />
 
                     <button
@@ -230,7 +230,7 @@ const Login = () => {
                       value={form.fullName}
                       onChange={(e) => onChange("fullName", e.target.value)}
                       placeholder="Enter full name"
-                      className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
+                      className="w-full rounded-lg border border-border bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
                     />
                   </div>
 
@@ -243,7 +243,7 @@ const Login = () => {
                       value={form.email}
                       onChange={(e) => onChange("email", e.target.value)}
                       placeholder="name@company.com"
-                      className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
+                      className="w-full rounded-lg border border-border bg-white px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
                     />
                   </div>
 
@@ -258,7 +258,7 @@ const Login = () => {
                         value={form.password}
                         onChange={(e) => onChange("password", e.target.value)}
                         placeholder="Enter password"
-                        className="w-full rounded-xl border border-border bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
+                        className="w-full rounded-lg border border-border bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
                       />
 
                       <button
@@ -288,7 +288,7 @@ const Login = () => {
                           onChange("confirmPassword", e.target.value)
                         }
                         placeholder="Re-enter password"
-                        className="w-full rounded-xl border border-border bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
+                        className="w-full rounded-lg border border-border bg-white px-4 py-3 pr-12 text-sm text-text outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary-soft/40"
                       />
 
                       <button
@@ -311,13 +311,13 @@ const Login = () => {
             {!isLogin &&
               form.confirmPassword &&
               form.password !== form.confirmPassword && (
-                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
                   Password and confirm password do not match.
                 </div>
               )}
 
             {errorMsg && (
-              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+              <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
                 {errorMsg}
               </div>
             )}
@@ -325,7 +325,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={!canSubmit || loading}
-              className="w-full rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading
                 ? isLogin

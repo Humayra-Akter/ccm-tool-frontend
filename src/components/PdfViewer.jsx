@@ -65,7 +65,7 @@ const PdfViewer = ({ controlCode = "DORMANT_PO" }) => {
 
   if (loadingFile) {
     return (
-      <div className="flex h-[560px] items-center justify-center rounded-2xl border border-border bg-bg text-sm text-muted">
+      <div className="flex h-[560px] items-center justify-center rounded-lg border border-border bg-bg text-sm text-muted">
         Loading PDF preview...
       </div>
     );
@@ -73,7 +73,7 @@ const PdfViewer = ({ controlCode = "DORMANT_PO" }) => {
 
   if (fileError) {
     return (
-      <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
+      <div className="rounded-lg border border-red-200 bg-red-50 p-6">
         <p className="text-sm font-semibold text-red-700">
           Failed to load PDF file.
         </p>
@@ -83,7 +83,7 @@ const PdfViewer = ({ controlCode = "DORMANT_PO" }) => {
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-white">
+    <div className="rounded-lg border border-border bg-white">
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div>
           <p className="text-sm font-semibold text-primary">

@@ -54,3 +54,39 @@ export async function fetchKpiDemoPdf(controlCode) {
   });
   return res.data;
 }
+
+// ---------------- Uploads ----------------
+
+export const getUploads = async (params = {}) => {
+  const response = await api.get("/uploads", { params });
+  return response.data.uploads;
+};
+
+export const uploadFile = async (formData, onUploadProgress) => {
+  const response = await api.post("/uploads", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    onUploadProgress,
+  });
+
+  return response.data.upload;
+};
+
+export const getUploadById = async (id) => {
+  const response = await api.get(`/uploads/${id}`);
+  return response.data.upload;
+};
+
+export const retryUpload = async (id) => {
+  const response = await api.post(`/uploads/${id}/retry`);
+  return response.data.upload;
+};
+
+export const downloadUpload = async (id) => {
+  const response = await api.get(`/uploads/${id}/download`, {
+    responseType: "blob",
+  });
+
+  return response.data;
+};
